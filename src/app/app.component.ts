@@ -3,10 +3,11 @@ import { CircleComponent } from './circle/circle.component';
 import { NgForOf } from '@angular/common';
 import { MonteCarloService } from './monte-carlo-service.service';
 import {Board} from "./board";
+import {MatButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-root',
-  imports: [CircleComponent, NgForOf],
+  imports: [CircleComponent, NgForOf, MatButton],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
@@ -32,7 +33,7 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
-  onButtonClick(col: number) {
+  playInColumn(col: number) {
     if (this.isColFilled(col)) {
       return;
     }
@@ -68,7 +69,12 @@ export class AppComponent implements AfterViewInit {
   }
 
   changeCircleColor(row: number, col: number, color: string) {
+
     this.circles[row][col].backgroundColor = color;
     this.circles[row][col].ngAfterViewInit();
+  }
+
+  resetGame() {
+    window.location.reload();
   }
 }
