@@ -10,8 +10,24 @@
   row-gap: 5px;
   border: none;
   background-color: #faf9fd;
+  border-radius: 15px;
 }
 
 .row-button:hover {
   background-color: #005cbb;
+}
+
+h1, h2, h3, h4 {
+  color: #005cbb;
+}
+
+p {
+  max-width: 40vw;
+  line-height: 30px;
+}
+
+.text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }

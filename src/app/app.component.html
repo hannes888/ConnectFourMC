@@ -1,4 +1,7 @@
-<div style="margin-top: 100px;">
+<div class="default-container">
+  <h1 style="color: #005cbb">Connect Four</h1>
+</div>
+<div>
   <div *ngFor="let row of rows; let rowIndex = index" class="default-container">
     <div *ngFor="let col of cols; let colIndex = index" style="display: inline-block; margin: 0;">
       <app-circle [backgroundColor]="'white'"></app-circle>
@@ -16,5 +19,28 @@
   <br>
   <div class="default-container">
     <button mat-raised-button (click)="resetGame()">Reset</button>
+  </div>
+</div>
+<div class="default-container">
+  <div class="text-container" style="margin-top: 100px">
+    <h2>Monte Carlo Algorithm</h2>
+    <p>The Monte Carlo algorithm makes decisions based on random actions and statistics. In this example it has been
+      used to
+      solve for the problem of Connect Four.</p>
+    <h3>Step 1</h3>
+    <p>For every possible move from a position, simulate n games, in this case n=200. Connect Four has up to
+      m=7 possible moves from a given position as there are 7 columns to choose from. Therefore, the maximum number of
+      games
+      we have to simulate is n * m = 7 * 200 = 1400.<br>
+      If instead we tried to calculate every possible game from a given position,
+      worst case we would have to calculate 2<sup>7*6</sup> = 2<sup>42</sup> = 4,398,046,511,104 games.<br>
+      The simulations are just a series
+      of random choices and are played until either side wins or it's a draw. A draw gives 0.5 points, a win 1 point and
+      a loss 0 points. Remember, we make a legal move first, then simulate the random games.</p>
+    <h3>Step 2</h3>
+    <p>Once we have simulated random games for every legal move, we can pick the move with the highest value. This approach is
+    simple, but works well enough for our use case.</p>
+    <h3>Extra</h3>
+    <p>If more performance is required, an upper confidence bound can be applied to the search tree to guide the search.</p>
   </div>
 </div>

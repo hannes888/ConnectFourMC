@@ -16,7 +16,7 @@ export class AppComponent implements AfterViewInit {
   rows = Array(6).fill(0);
   cols = Array(7).fill(0);
   circles: CircleComponent[][] = [];
-  currentPlayer: 'red' | 'yellow' = 'red';
+  currentPlayer: 'red' | 'blue' = 'red';
   board = new Board();
 
   @ViewChildren(CircleComponent) circleComponents!: QueryList<CircleComponent>;
@@ -39,7 +39,7 @@ export class AppComponent implements AfterViewInit {
     }
 
     // Player move
-    this.makeMove(col, 'yellow');
+    this.makeMove(col, 'blue');
     if (this.board.checkForWin() === this.currentPlayer) {
       alert(`${this.currentPlayer} wins!`);
       return;
@@ -51,18 +51,22 @@ export class AppComponent implements AfterViewInit {
     if (this.board.checkForWin() === 'red') {
       alert('Computer (red) wins!');
     }
+
+    if (this.board.getLegalMoves().length === 0) {
+      alert('It\'s a tie!')
+    }
   }
 
   isColFilled(col: number): boolean {
     return this.circles[0][col].backgroundColor !== 'white';
   }
 
-  makeMove(col: number, player: 'red' | 'yellow') {
+  makeMove(col: number, player: 'red' | 'blue') {
     for (let row = this.rows.length - 1; row >= 0; row--) {
       if (this.circles[row][col].backgroundColor === 'white') {
         this.changeCircleColor(row, col, player);
         this.board.makeMove(col, player);
-        this.currentPlayer = this.currentPlayer === 'red' ? 'yellow' : 'red';
+        this.currentPlayer = this.currentPlayer === 'red' ? 'blue' : 'red';
         break;
       }
     }

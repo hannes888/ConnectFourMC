@@ -24,7 +24,7 @@ export class MonteCarloService {
       }
 
       const randMove = legalMoves[Math.floor(Math.random() * legalMoves.length)];
-      const player = n % 2 === 0 ? 'red' : 'yellow';
+      const player = n % 2 === 0 ? 'red' : 'blue';
       simulationBoard.makeMove(randMove, player);
       n += 1;
 
@@ -32,7 +32,7 @@ export class MonteCarloService {
       if (winner === 'red') {
         return 1;
       }
-      if (winner === 'yellow') {
+      if (winner === 'blue') {
         return 0;
       }
       console.log(simulationBoard.getLegalMoves());

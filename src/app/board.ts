@@ -1,7 +1,7 @@
 export class Board {
   private board: string[][];
   private redPattern = /(red){4,}/;
-  private yellowPattern = /(yellow){4,}/;
+  private bluePattern = /(blue){4,}/;
 
   constructor(board: Board | null = null) {
     if (board === null) {
@@ -25,7 +25,7 @@ export class Board {
     return legalMoves;
   }
 
-  makeMove(col: number, player: 'red' | 'yellow'): boolean {
+  makeMove(col: number, player: 'red' | 'blue'): boolean {
     for (let row = this.board.length - 1; row >= 0; row--) {
       if (this.board[row][col] === 'white') {
         this.board[row][col] = player;
@@ -44,8 +44,8 @@ export class Board {
     if (this.redPattern.test(line)) {
       return 'red';
     }
-    if (this.yellowPattern.test(line)) {
-      return 'yellow';
+    if (this.bluePattern.test(line)) {
+      return 'blue';
     }
     return false;
   }

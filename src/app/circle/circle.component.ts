@@ -17,7 +17,7 @@ export class CircleComponent implements AfterViewInit {
     if (ctx) {
       if (this.backgroundColor === 'red') {
         this.borderColor = this.backgroundColor;
-      } else if (this.backgroundColor === 'yellow') {
+      } else if (this.backgroundColor === 'blue') {
         this.backgroundColor = '#005cbb';
         this.borderColor = this.backgroundColor;
       }
