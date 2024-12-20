@@ -38,7 +38,7 @@ export class AppComponent implements AfterViewInit {
     }
 
     // Player move
-    this.makeMove(col, this.currentPlayer);
+    this.makeMove(col, 'yellow');
     if (this.board.checkForWin() === this.currentPlayer) {
       alert(`${this.currentPlayer} wins!`);
       return;

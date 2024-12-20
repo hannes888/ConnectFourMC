@@ -1,7 +1,7 @@
 export class Board {
   private board: string[][];
-  private redPattern = /red{4}/;
-  private yellowPattern = /yellow{4}/;
+  private redPattern = /(red){4,}/;
+  private yellowPattern = /(yellow){4,}/;
 
   constructor(board: Board | null = null) {
     if (board === null) {
