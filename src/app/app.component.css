@@ -1,3 +1,10 @@
+.github-link {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: block;
+}
+
 .default-container {
   display: flex;
   justify-content: center;

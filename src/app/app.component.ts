@@ -1,13 +1,13 @@
 import { Component, ViewChildren, QueryList, AfterViewInit } from '@angular/core';
 import { CircleComponent } from './circle/circle.component';
-import { NgForOf } from '@angular/common';
+import {NgForOf, NgOptimizedImage} from '@angular/common';
 import { MonteCarloService } from './monte-carlo-service.service';
 import {Board} from "./board";
 import {MatButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-root',
-  imports: [CircleComponent, NgForOf, MatButton],
+  imports: [CircleComponent, NgForOf, MatButton, NgOptimizedImage],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
