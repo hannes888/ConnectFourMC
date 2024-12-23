@@ -8,7 +8,7 @@
     </div>
   </div>
   <div class="default-container">
-    <button (click)="playInColumn(0)" class="row-button"></button>
+    <button (click)="playInColumn(0)" class="row-button mat-raised-button"></button>
     <button (click)="playInColumn(1)" class="row-button"></button>
     <button (click)="playInColumn(2)" class="row-button"></button>
     <button (click)="playInColumn(3)" class="row-button"></button>
@@ -23,6 +23,10 @@
 </div>
 <div class="default-container">
   <div class="text-container" style="margin-top: 100px">
+    <h2>Connect Four</h2>
+    <p>The aim of the game is to connect four or more of your pieces vertically, horizontally or diagonally.
+      The pieces always fill the lowest available spot in the column (physical game uses gravity for this).
+      With perfect play, the player to go first can always force a win.</p>
     <h2>Monte Carlo Algorithm</h2>
     <p>The Monte Carlo algorithm makes decisions based on random actions and statistics. In this example it has been
       used to
@@ -38,9 +42,11 @@
       of random choices and are played until either side wins or it's a draw. A draw gives 0.5 points, a win 1 point and
       a loss 0 points. Remember, we make a legal move first, then simulate the random games.</p>
     <h3>Step 2</h3>
-    <p>Once we have simulated random games for every legal move, we can pick the move with the highest value. This approach is
-    simple, but works well enough for our use case.</p>
+    <p>Once we have simulated random games for every legal move, we can pick the move with the highest value. This
+      approach is
+      simple, but works well enough for our use case.</p>
     <h3>Extra</h3>
-    <p>If more performance is required, an upper confidence bound can be applied to the search tree to guide the search.</p>
+    <p>If more performance is required, an upper confidence bound can be applied to the search tree to guide the
+      search.</p>
   </div>
 </div>

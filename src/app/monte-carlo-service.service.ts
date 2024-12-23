@@ -15,10 +15,6 @@ export class MonteCarloService {
     for (let i = 0; i < 42; i++) { // Max 7 * 6 = 42 moves to end the game
       const legalMoves = simulationBoard.getLegalMoves();
 
-      if (legalMoves.length < 2) {
-        console.log('Debug');
-      }
-
       if (legalMoves.length === 0) {
         return 0.5;
       }
@@ -35,7 +31,6 @@ export class MonteCarloService {
       if (winner === 'blue') {
         return 0;
       }
-      console.log(simulationBoard.getLegalMoves());
     }
     return 0.5;
   }
@@ -56,6 +51,9 @@ export class MonteCarloService {
     });
 
     const best = Math.max(...Object.values(winCounts));
+    Object.entries(winCounts).forEach(([move, wins]) => {
+      console.log(move + ": " + wins + "\n");
+    });
     return initialMoves.find(move => winCounts[move] === best) as number;
   }
 }

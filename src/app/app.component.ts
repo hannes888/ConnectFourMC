@@ -50,9 +50,7 @@ export class AppComponent implements AfterViewInit {
     this.makeMove(bestMove, 'red');
     if (this.board.checkForWin() === 'red') {
       alert('Computer (red) wins!');
-    }
-
-    if (this.board.getLegalMoves().length === 0) {
+    } else if (this.board.getLegalMoves().length === 0) {
       alert('It\'s a tie!')
     }
   }
