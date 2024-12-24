@@ -7,7 +7,7 @@ import {MatButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-root',
-  imports: [CircleComponent, NgForOf, MatButton, NgOptimizedImage],
+  imports: [CircleComponent, NgForOf, MatButton],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
