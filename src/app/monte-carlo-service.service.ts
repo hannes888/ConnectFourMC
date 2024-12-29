@@ -76,7 +76,7 @@ export class MonteCarloService {
       let boardCopy = board.clone();
       const player: 'red' | 'blue' = i % 2 === 0 ? 'red' : 'blue';
 
-      while (!tree.isLeaf(current)) {
+      while (current.children && current.move !== null && !tree.isLeaf(current)) {
         current = current.children.sort(node => this.calculateUCB(node)).reverse()[0];
         boardCopy.makeMove(current.move, player);
       }

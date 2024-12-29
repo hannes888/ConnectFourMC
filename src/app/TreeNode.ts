@@ -6,7 +6,7 @@ class TreeNode {
   private _parent?: TreeNode | null;
   private _children: TreeNode[];
 
-  constructor(move: number) {
+  constructor(move: number = 0) {
     this._move = move;
     this._children = [];
     this._parent = null;
