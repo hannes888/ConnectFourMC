@@ -36,7 +36,12 @@ export class MonteCarloService {
     return 0.5;
   }
 
-  pureMC(board: Board, n: number = 500): number {
+  pureMC(board: Board, n: number = 1000): number {
+    let bestMove: number | null = this.gameEndingMove(board, 'red');
+    if (bestMove) {
+      return bestMove;
+    }
+
     const initialMoves = board.getLegalMoves();
     const winCounts: { [key: number]: number } = {};
 
@@ -55,7 +60,18 @@ export class MonteCarloService {
     Object.entries(winCounts).forEach(([move, wins]) => {
       console.log(move + ": " + wins + "\n");
     });
-    return initialMoves.find(move => winCounts[move] === best) as number;
+
+    let bestRedMove: number = initialMoves.find(move => winCounts[move] === best) as number;
+
+    let boardCopy = board.clone();
+    boardCopy.makeMove(bestRedMove, 'red');
+
+    bestMove = this.gameEndingMove(boardCopy, 'blue');
+    if (bestMove) {
+      return bestMove;
+    } else {
+      return bestRedMove;
+    }
   }
 
   calculateUCB(node: TreeNode) {
@@ -71,7 +87,7 @@ export class MonteCarloService {
     return (utility / visits) + explorationConst * (Math.sqrt((Math.log(parentVisits) / visits)));
   }
 
-  MCWithUCB(board: Board, n: number = 500): number {
+  MCWithUCB(board: Board, n: number = 100000): number {
     const root = new TreeNode(0);
     const tree = new MonteCarloTree(root);
     const initialValidMoves: number[] = board.getLegalMoves();
@@ -117,6 +133,7 @@ export class MonteCarloService {
     let bestRedMove: number = root.children.reduce((bestNode, node) => {
       return this.calculateUCB(node) > this.calculateUCB(bestNode) ? node : bestNode;
     }).move;
+
     let boardCopy = board.clone();
     boardCopy.makeMove(bestRedMove, 'red');
 

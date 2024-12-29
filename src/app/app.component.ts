@@ -47,7 +47,7 @@ export class AppComponent implements AfterViewInit {
 
     // Computer move
     // const bestMove = this.monteCarloService.pureMC(this.board);
-    const bestMove: number = this.monteCarloService.MCWithUCB(this.board);
+    const bestMove: number = this.monteCarloService.pureMC(this.board);
     this.makeMove(bestMove, 'red');
     if (this.board.checkForWin() === 'red') {
       alert('Computer (red) wins!');
