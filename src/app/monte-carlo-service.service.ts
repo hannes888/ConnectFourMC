@@ -36,7 +36,7 @@ export class MonteCarloService {
     return 0.5;
   }
 
-  pureMC(board: Board, n: number = 200): number {
+  pureMC(board: Board, n: number = 500): number {
     const initialMoves = board.getLegalMoves();
     const winCounts: { [key: number]: number } = {};
 
@@ -60,27 +60,40 @@ export class MonteCarloService {
 
   calculateUCB(node: TreeNode) {
     const utility: number = node.utility;
-    const visits: number = node.visits !== 0 ? node.visits : 1;
+    const visits: number = node.visits;
     const explorationConst: number = Math.sqrt(2);
     const parentVisits: number = node.parent ? node.parent.visits : 1;
 
-    return (utility / visits) + explorationConst * (Math.sqrt((Math.log2(parentVisits) / visits)));
+    if (visits === 0) {
+      return Infinity;
+    }
+
+    return (utility / visits) + explorationConst * (Math.sqrt((Math.log(parentVisits) / visits)));
   }
 
-  MCWithUCB(board: Board, n: number = 200): number {
+  MCWithUCB(board: Board, n: number = 500): number {
     const root = new TreeNode(0);
     const tree = new MonteCarloTree(root);
     const initialValidMoves: number[] = board.getLegalMoves();
+
     initialValidMoves.forEach(move => tree.addNode(root, new TreeNode(move)))
+
+    let bestMove: number | null = this.gameEndingMove(board, 'red');
+    if (bestMove) {
+      return bestMove;
+    }
 
     for (let i: number = 0; i < n; i++) {
       let current: TreeNode = root;
       let boardCopy = board.clone();
-      const player: 'red' | 'blue' = i % 2 === 0 ? 'red' : 'blue';
+      let player: 'red' | 'blue' = 'red';
 
       while (current.children && current.move !== null && !tree.isLeaf(current)) {
-        current = current.children.sort(node => this.calculateUCB(node)).reverse()[0];
+        current = current.children.reduce((bestNode, node) => {
+          return this.calculateUCB(node) > this.calculateUCB(bestNode) ? node : bestNode;
+        });
         boardCopy.makeMove(current.move, player);
+        player = (player === 'red' ? 'blue' : 'red');
       }
 
       if (current.visits !== 0) {
@@ -89,7 +102,7 @@ export class MonteCarloService {
         current = current.children[0];
       }
 
-      const utility: number = this.simulate(board, current.move, player);
+      const utility: number = this.simulate(boardCopy, current.move, player);
 
       // Backpropagation
       while (current.parent) {
@@ -97,7 +110,33 @@ export class MonteCarloService {
         current.visits += 1;
         current = current.parent;
       }
+      current.utility += utility;
+      current.visits += 1;
     }
-    return root.children.sort(node => this.calculateUCB(node)).reverse()[0].move;
+
+    let bestRedMove: number = root.children.reduce((bestNode, node) => {
+      return this.calculateUCB(node) > this.calculateUCB(bestNode) ? node : bestNode;
+    }).move;
+    let boardCopy = board.clone();
+    boardCopy.makeMove(bestRedMove, 'red');
+
+    bestMove = this.gameEndingMove(boardCopy, 'blue');
+    if (bestMove) {
+      return bestMove;
+    } else {
+      return bestRedMove;
+    }
+  }
+
+  private gameEndingMove(board: Board, player: 'red' | 'blue'): number | null {
+    const validMoves: number[] = board.getLegalMoves();
+    for (let move of validMoves) {
+      let boardCopy: Board = board.clone();
+      boardCopy.makeMove(move, player);
+      if (boardCopy.checkForWin()) {
+        return move;
+      }
+    }
+    return null;
   }
 }

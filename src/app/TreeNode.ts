@@ -17,6 +17,7 @@ export class TreeNode {
 
   public addChild(node: TreeNode) {
     this._children.push(node);
+    node.parent = this;
   }
 
   get utility(): number {
