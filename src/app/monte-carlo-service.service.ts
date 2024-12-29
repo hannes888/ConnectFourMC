@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Board } from './board';
+import { TreeNode } from './TreeNode';
+import {MonteCarloTree} from './MonteCarloTree';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +9,7 @@ import { Board } from './board';
 export class MonteCarloService {
   constructor() {}
 
-  simulate(board: Board, move: number, player: 'red' | 'blue'): number {
+  simulate(board: Board, move: number, player: 'red' | 'blue' = 'red'): number {
     const simulationBoard = board.clone();
     simulationBoard.makeMove(move, player);
 

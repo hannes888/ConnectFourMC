@@ -1,6 +1,7 @@
+import {TreeNode} from './TreeNode';
 
 
-class MonteCarloTree {
+export class MonteCarloTree {
   private root: TreeNode;
 
   constructor(node: TreeNode) {
